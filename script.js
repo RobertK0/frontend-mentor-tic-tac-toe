@@ -21,11 +21,26 @@ const clearBoard = function () {
 };
 
 const acceptInput = function (square) {
-  boardState[square.dataset.row][square.dataset.column] = "x";
-  square.innerHTML = `<img src="img/icon-x.svg" alt="" />`;
-  console.log(square.dataset.column, square.dataset.row);
-  console.table(boardState);
-  checkWin();
+  if (boardState[square.dataset.row][square.dataset.column].valueOf() === "") {
+    boardState[square.dataset.row][square.dataset.column] = "x";
+    square.innerHTML = `<img src="img/icon-x.svg" alt="" />`;
+    console.table(boardState);
+    checkWin();
+    cpuInput();
+  }
+};
+
+const cpuInput = function () {
+  let row, column;
+
+  do {
+    row = Math.trunc(Math.random() * 3);
+    column = Math.trunc(Math.random() * 3);
+  } while (boardState[row][column].valueOf() !== "");
+  boardState[row][column] = "o";
+  document.querySelector(
+    `[data-row="${row}"][data-column="${column}"]`
+  ).innerHTML = `<img src="img/icon-o.svg" alt="" />`;
 };
 
 const checkWin = function () {
