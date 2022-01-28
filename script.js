@@ -69,7 +69,7 @@ const checkWin = function (player) {
 
       victoryFlag = true;
       updateScoreboard();
-      toggleModal(player);
+      showWinner(player);
     }
   }
   for (let i = 0; i < 3; i++) {
@@ -80,7 +80,7 @@ const checkWin = function (player) {
   check(2, 1, 0);
   if (!victoryFlag && counter === 9) {
     scores.tie++;
-    toggleModal();
+    showWinner();
   }
   updateScoreboard();
 };
@@ -92,7 +92,7 @@ const updateScoreboard = function () {
   }
 };
 
-const toggleModal = function (winner = "tie") {
+const showWinner = function (winner = "tie") {
   const text = document.querySelector(".text-winner");
   if (winner !== "tie")
     text.innerHTML = `<img src="img/icon-${winner}.svg" alt="" /> takes the round`;
@@ -107,7 +107,10 @@ const toggleModal = function (winner = "tie") {
     text.style.color = "#31c3bd";
     text.previousElementSibling.innerHTML = `Awh...`;
   }
+  toggleModal();
+};
 
+const toggleModal = function () {
   document.querySelector(".modal").classList.toggle("hidden");
   document.querySelector(".overlay").classList.toggle("hidden");
 };
@@ -149,6 +152,8 @@ nextBtn.addEventListener("click", function (e) {
 
 window.addEventListener("beforeunload", function () {
   localStorage.setItem("scores", JSON.stringify(scores));
+  // if (!victoryFlag)
+  //   localStorage.setItem("boardState", JSON.stringify(boardState));
 });
 
 if (localStorage.scores) {
