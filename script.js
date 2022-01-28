@@ -1,10 +1,8 @@
 "use strict";
 
-let boardState, counter;
-let turn = true;
-
-let victoryFlag = false;
-let mark = "x";
+const container = document.querySelector(".container");
+const modal = document.querySelector(".modal");
+const newGame = document.querySelector(".new-game-container");
 
 const gameContainer = document.querySelector(".game-container");
 const restartBtn = document.querySelector(".restart-btn");
@@ -16,7 +14,18 @@ const markToggle = document.querySelector(".mark-toggle");
 
 const turnXSrc = "img/icon-x-gray.svg";
 const turnOSrc = "img/icon-o-gray.svg";
+
+let boardState, counter;
+let turn = true;
+
+let victoryFlag = false;
+let mark = "x";
+
 let scores = { x: 0, tie: 0, o: 0 };
+
+class App {
+  constructor() {}
+}
 
 ////////Functions
 ////Resets boardState variable and clears all html squares
@@ -162,33 +171,8 @@ const init = function () {
     .querySelectorAll(".square")
     .forEach((square) => (square.innerHTML = ""));
 };
-////////Listeners
 
-gameContainer.addEventListener("click", function (e) {
-  if (e.target.classList.contains("square")) acceptInput(e.target);
-});
-
-restartBtn.addEventListener("click", function () {
-  init();
-});
-
-quitBtn.addEventListener("click", function (e) {
-  toggleModal();
-});
-
-nextBtn.addEventListener("click", function (e) {
-  init();
-  toggleModal();
-});
-
-newBtn.addEventListener("click", function (e) {
-  init();
-  document.querySelector(".new-game-overlay").classList.toggle("hidden");
-});
-
-markToggle.addEventListener("click", function (e) {
-  e.preventDefault();
-
+const toggleRadio = function (e) {
   let unchecked;
   if (e.target.parentNode.querySelector(".mark")) {
     markToggle.querySelectorAll(".mark").forEach((element) => {
@@ -197,17 +181,28 @@ markToggle.addEventListener("click", function (e) {
     unchecked.checked = !unchecked.checked;
     changeSelection(unchecked.value);
   }
-});
-/*
-window.addEventListener("beforeunload", function () {
-  localStorage.setItem("scores", JSON.stringify(scores));
-  // if (!victoryFlag)
-  //   localStorage.setItem("boardState", JSON.stringify(boardState));
+};
+
+////////Listeners
+
+container.addEventListener("click", function (e) {
+  if (e.target.classList.contains("square")) acceptInput(e.target);
+  if (e.target.classList.contains("restart-btn")) init();
 });
 
-if (localStorage.scores) {
-  scores = JSON.parse(localStorage.getItem("scores"));
-}
+modal.addEventListener("click", function (e) {
+  if (e.target.classList.contains("next-btn")) {
+    init();
+    toggleModal();
+  }
+  if (e.target.classList.contains("quit-btn")) toggleModal();
+});
 
-updateScoreboard();
-*/
+newGame.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (e.target.classList.contains("new-btn")) {
+    init();
+    document.querySelector(".new-game-overlay").classList.toggle("hidden");
+  }
+  if (e.target.closest(".mark-toggle")) toggleRadio(e);
+});
