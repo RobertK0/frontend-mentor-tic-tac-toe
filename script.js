@@ -7,11 +7,22 @@ let boardState = [
 ];
 
 const gameContainer = document.querySelector(".game-container");
-
-const clearBoard = function () {};
+////////Functions
+////Resets boardState variable and clears all html squares
+const clearBoard = function () {
+  boardState = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ];
+  document
+    .querySelectorAll(".square")
+    .forEach((square) => (square.innerHTML = ""));
+};
 
 const acceptInput = function (square) {
   boardState[square.dataset.row][square.dataset.column] = "x";
+  square.innerHTML = `<img src="img/icon-x.svg" alt="" />`;
   console.log(square.dataset.column, square.dataset.row);
   console.table(boardState);
   checkWin();
@@ -34,6 +45,8 @@ const checkWin = function () {
   check(0, 1, 2);
   check(2, 1, 0);
 };
+
+////////Listeners
 
 gameContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("square")) acceptInput(e.target);

@@ -88,6 +88,10 @@ header {
 }
 
 .square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: #1f3540;
   height: 10rem;
   width: 10rem;
