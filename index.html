@@ -4,13 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
     <title>Tic-tac-toe</title>
   </head>
   <body>
     <div class="container">
-      <header></header>
+      <header>
+        <img class="logo-img" src="/img/logo.svg" alt="" />
+        <div class="turn">
+          <img class="turn-img" src="img/icon-x-gray.svg" alt="" /><span
+            class="turn-text"
+            >Turn</span
+          >
+        </div>
+        <button class="restart-btn"></button>
+      </header>
       <main>
         <div class="square"></div>
         <div class="square"></div>
@@ -22,7 +37,20 @@
         <div class="square"></div>
         <div class="square"></div>
       </main>
-      <footer></footer>
+      <footer>
+        <div class="score score-x">
+          <span class="score-text">X (You)</span
+          ><span class="score-value-x">&nbsp;</span>
+        </div>
+        <div class="score score-tie">
+          <span class="score-text">Ties</span
+          ><span class="score-value-tie">&nbsp;</span>
+        </div>
+        <div class="score score-o">
+          <span class="score-text">O (CPU)</span
+          ><span class="score-value-o">&nbsp;</span>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
