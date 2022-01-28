@@ -6,6 +6,10 @@ let victoryFlag = false;
 
 const gameContainer = document.querySelector(".game-container");
 const restartBtn = document.querySelector(".restart-btn");
+const turnImg = document.querySelector(".turn-img");
+const turnXSrc = "img/icon-x-gray.svg";
+const turnOSrc = "img/icon-o-gray.svg";
+const scores = { x: 0, tie: 0, o: 0 };
 
 ////////Functions
 ////Resets boardState variable and clears all html squares
@@ -25,6 +29,7 @@ const acceptInput = function (square) {
     counter++;
     turn = !turn;
     checkWin("x");
+    turnImg.src = turnOSrc;
     const delay = (Math.random() * 1.5).toFixed(3);
     setTimeout(() => cpuInput(), delay * 1000);
   }
@@ -44,6 +49,7 @@ const cpuInput = function () {
       `[data-row="${row}"][data-column="${column}"]`
     ).innerHTML = `<img src="img/icon-o.svg" alt="" />`;
     turn = !turn;
+    turnImg.src = turnXSrc;
     checkWin("o");
   }
 };
@@ -56,7 +62,10 @@ const checkWin = function (player) {
       boardState[var4][var1].valueOf() === boardState[var6][var3].valueOf()
     ) {
       console.log(player, "victory");
+      scores[player]++;
+
       victoryFlag = true;
+      updateScoreboard();
     }
   }
   for (let i = 0; i < 3; i++) {
@@ -65,7 +74,15 @@ const checkWin = function (player) {
   }
   check(0, 1, 2);
   check(2, 1, 0);
-  if (counter === 9) console.log("its a tie");
+  if (!victoryFlag && counter === 9) scores.tie++;
+  updateScoreboard();
+};
+
+const updateScoreboard = function () {
+  for (const element in scores) {
+    document.querySelector(`.score-value-${element}`).innerHTML =
+      scores[element];
+  }
 };
 
 const init = function () {
@@ -93,3 +110,4 @@ restartBtn.addEventListener("click", function () {
 });
 
 init();
+updateScoreboard();
