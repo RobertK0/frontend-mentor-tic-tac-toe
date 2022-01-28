@@ -23,7 +23,120 @@ body {
   align-items: center;
 }
 
-.container {
+.new-game-overlay {
+  background-color: #192a32;
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+}
+
+.new-game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  width: 40rem;
+
+  z-index: 2;
+}
+
+.pick-container {
+  background-color: #1f3540;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  border-radius: 7px;
+  padding: 2rem;
+}
+
+.mark-toggle {
+  border: none;
+  border-radius: 7px;
+  background-color: #192a32;
+  padding: 0.5rem;
+}
+
+.mark {
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.pick-heading,
+.pick-text {
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.pick-heading {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.mark-icon {
+  height: 3rem;
+  padding: 0.6rem 5.5rem;
+  box-sizing: content-box;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.icon-x {
+  content: url(img/icon-x-gray.svg);
+}
+
+.icon-x.selected {
+  content: url(img/icon-x-dark.svg);
+}
+
+.icon-o {
+  content: url(img/icon-o-gray.svg);
+}
+
+.icon-o.selected {
+  content: url(img/icon-o-dark.svg);
+}
+
+.selected {
+  background-color: #a8bfc9;
+}
+
+.pick-text {
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.new-btn {
+  text-transform: uppercase;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 7px;
+  width: 100%;
+  height: 5rem;
+
+  cursor: pointer;
+}
+
+.cpu-btn {
+  background-color: #f2b137;
+}
+
+.player-btn {
+  background-color: #31c3bd;
 }
 
 header {
@@ -33,6 +146,7 @@ header {
 
   position: relative;
   margin-bottom: 2rem;
+  z-index: 0;
 }
 
 .logo-img {

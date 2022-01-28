@@ -15,6 +15,27 @@
     <title>Tic-tac-toe</title>
   </head>
   <body>
+    <div class="new-game-overlay">
+      <div class="new-game-container">
+        <img class="logo" src="img/logo.svg" alt="" />
+        <div class="pick-container">
+          <span class="pick-heading">Pick player 1's mark</span>
+          <fieldset class="mark-toggle">
+            <label
+              ><input class="mark" name="mark" value="x" type="radio" checked />
+              <img class="mark-icon icon-x selected" alt=""
+            /></label>
+            <label
+              ><input class="mark" name="mark" value="o" type="radio" />
+              <img class="mark-icon icon-o" alt=""
+            /></label>
+          </fieldset>
+          <span class="pick-text">Remember: X goes first</span>
+        </div>
+        <button class="new-btn cpu-btn">New game (vs CPU)</button>
+        <button class="new-btn player-btn">New game (vs player)</button>
+      </div>
+    </div>
     <div class="container">
       <header>
         <img class="logo-img" src="img/logo.svg" alt="" />

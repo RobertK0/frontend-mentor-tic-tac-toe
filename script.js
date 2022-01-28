@@ -2,13 +2,17 @@
 
 let boardState, counter;
 let turn = true;
+
 let victoryFlag = false;
+let mark = "x";
 
 const gameContainer = document.querySelector(".game-container");
 const restartBtn = document.querySelector(".restart-btn");
 const turnImg = document.querySelector(".turn-img");
 const quitBtn = document.querySelector(".quit-btn");
 const nextBtn = document.querySelector(".next-btn");
+const newBtn = document.querySelector(".new-btn");
+const markToggle = document.querySelector(".mark-toggle");
 
 const turnXSrc = "img/icon-x-gray.svg";
 const turnOSrc = "img/icon-o-gray.svg";
@@ -26,34 +30,42 @@ const acceptInput = function (square) {
     !victoryFlag &&
     boardState[square.dataset.row][square.dataset.column].valueOf() === ""
   ) {
-    boardState[square.dataset.row][square.dataset.column] = "x";
-    square.innerHTML = `<img src="img/icon-x.svg" alt="" />`;
+    boardState[square.dataset.row][square.dataset.column] = `${mark}`;
+    square.innerHTML = `<img src="img/icon-${mark}.svg" alt="" />`;
     console.table(boardState);
     counter++;
     turn = !turn;
-    checkWin("x");
-    turnImg.src = turnOSrc;
+    checkWin(`${mark}`);
+    if (mark.valueOf() === "x") {
+      turnImg.src = turnOSrc;
+    } else {
+      turnImg.src = turnXSrc;
+    }
     const delay = (Math.random() * 1.5).toFixed(3);
     setTimeout(() => cpuInput(), delay * 1000);
   }
 };
 
 const cpuInput = function () {
-  let row, column, i;
+  let row, column;
+  const cpuMark = mark.valueOf() === "o" ? "x" : "o";
   if (!turn && counter < 9 && !victoryFlag) {
     do {
       row = Math.trunc(Math.random() * 3);
       column = Math.trunc(Math.random() * 3);
-      i++;
     } while (boardState[row][column].valueOf() !== "");
-    boardState[row][column] = "o";
+    boardState[row][column] = `${cpuMark}`;
     counter++;
     document.querySelector(
       `[data-row="${row}"][data-column="${column}"]`
-    ).innerHTML = `<img src="img/icon-o.svg" alt="" />`;
+    ).innerHTML = `<img src="img/icon-${cpuMark}.svg" alt="" />`;
     turn = !turn;
-    turnImg.src = turnXSrc;
-    checkWin("o");
+    if (mark.valueOf() === "x") {
+      turnImg.src = turnXSrc;
+    } else {
+      turnImg.src = turnOSrc;
+    }
+    checkWin(`${cpuMark}`);
   }
 };
 
@@ -94,18 +106,23 @@ const updateScoreboard = function () {
 
 const showWinner = function (winner = "tie") {
   const text = document.querySelector(".text-winner");
+  text.innerHTML = `It's a tie`;
   if (winner !== "tie")
     text.innerHTML = `<img src="img/icon-${winner}.svg" alt="" /> takes the round`;
-
+  let announcement = text.previousElementSibling;
   if (winner === "x") {
     text.style.color = "#31c3bd";
-    text.previousElementSibling.innerHTML = "You won!";
+    mark === "x"
+      ? (announcement.innerHTML = "You won!")
+      : (announcement.innerHTML = "You lost...");
   } else if (winner === "o") {
     text.style.color = "#f2b137";
-    text.previousElementSibling.innerHTML = "You lost...";
+    mark === "o"
+      ? (announcement.innerHTML = "You won!")
+      : (announcement.innerHTML = "You lost...");
   } else {
     text.style.color = "#31c3bd";
-    text.previousElementSibling.innerHTML = `Awh...`;
+    announcement.innerHTML = `Awh...`;
   }
   toggleModal();
 };
@@ -113,6 +130,14 @@ const showWinner = function (winner = "tie") {
 const toggleModal = function () {
   document.querySelector(".modal").classList.toggle("hidden");
   document.querySelector(".overlay").classList.toggle("hidden");
+};
+
+const changeSelection = function (selection) {
+  document
+    .querySelectorAll(".mark-icon")
+    .forEach((element) => element.classList.toggle("selected"));
+  console.log(selection);
+  mark = selection;
 };
 
 const init = function () {
@@ -123,9 +148,15 @@ const init = function () {
   ];
 
   counter = 0;
-  turn = true;
+  if (mark.valueOf() === "x") {
+    turn = true;
+  } else {
+    turn = false;
+    const delay = (Math.random() * 1.5).toFixed(3);
+    setTimeout(() => cpuInput(), delay * 1000);
+  }
+
   victoryFlag = false;
-  turnImg.src = turnXSrc;
 
   document
     .querySelectorAll(".square")
@@ -150,6 +181,24 @@ nextBtn.addEventListener("click", function (e) {
   toggleModal();
 });
 
+newBtn.addEventListener("click", function (e) {
+  init();
+  document.querySelector(".new-game-overlay").classList.toggle("hidden");
+});
+
+markToggle.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  let unchecked;
+  if (e.target.parentNode.querySelector(".mark")) {
+    markToggle.querySelectorAll(".mark").forEach((element) => {
+      if (!element.checked) unchecked = element;
+    });
+    unchecked.checked = !unchecked.checked;
+    changeSelection(unchecked.value);
+  }
+});
+/*
 window.addEventListener("beforeunload", function () {
   localStorage.setItem("scores", JSON.stringify(scores));
   // if (!victoryFlag)
@@ -160,5 +209,5 @@ if (localStorage.scores) {
   scores = JSON.parse(localStorage.getItem("scores"));
 }
 
-init();
 updateScoreboard();
+*/
