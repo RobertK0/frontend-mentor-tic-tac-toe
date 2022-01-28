@@ -17,9 +17,13 @@ body {
   font-family: "Outfit", sans-serif;
   background-color: #192a32;
 
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container {
 }
 
 header {
@@ -136,4 +140,69 @@ footer {
 
 .score-o {
   background-color: #f2b137;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  padding: 3rem;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #192a32;
+
+  z-index: 1;
+}
+
+.text-result {
+  color: #fff;
+
+  text-transform: uppercase;
+  font-size: 1.6rem;
+}
+
+.text-winner {
+  color: #31c3bd;
+
+  text-transform: uppercase;
+  font-size: 3.6rem;
+  font-weight: 800;
+}
+
+.action-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-container button {
+  border: none;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.6rem;
+  padding: 1rem;
+
+  cursor: pointer;
+}
+
+.quit-btn {
+  background-color: #a3b9c4;
+}
+
+.next-btn {
+  background-color: #f2b137;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #00000088;
 }
