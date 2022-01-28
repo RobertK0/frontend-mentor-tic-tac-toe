@@ -3,13 +3,7 @@
 const container = document.querySelector(".container");
 const modal = document.querySelector(".modal");
 const newGame = document.querySelector(".new-game-container");
-
-const gameContainer = document.querySelector(".game-container");
-const restartBtn = document.querySelector(".restart-btn");
 const turnImg = document.querySelector(".turn-img");
-const quitBtn = document.querySelector(".quit-btn");
-const nextBtn = document.querySelector(".next-btn");
-const newBtn = document.querySelector(".new-btn");
 const markToggle = document.querySelector(".mark-toggle");
 
 const turnXSrc = "img/icon-x-gray.svg";
