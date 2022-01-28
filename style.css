@@ -1,0 +1,42 @@
+* {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  min-height: 100vh;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #192a32;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 1.6rem;
+}
+
+.square {
+  background-color: #1f3540;
+  height: 10rem;
+  width: 10rem;
+
+  border-radius: 1rem;
+
+  box-shadow: 0 6px 0 0 #0f2229;
+
+  cursor: pointer;
+}
