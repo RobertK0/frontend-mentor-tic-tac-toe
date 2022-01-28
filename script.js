@@ -7,9 +7,12 @@ let victoryFlag = false;
 const gameContainer = document.querySelector(".game-container");
 const restartBtn = document.querySelector(".restart-btn");
 const turnImg = document.querySelector(".turn-img");
+const quitBtn = document.querySelector(".quit-btn");
+const nextBtn = document.querySelector(".next-btn");
+
 const turnXSrc = "img/icon-x-gray.svg";
 const turnOSrc = "img/icon-o-gray.svg";
-const scores = { x: 0, tie: 0, o: 0 };
+let scores = { x: 0, tie: 0, o: 0 };
 
 ////////Functions
 ////Resets boardState variable and clears all html squares
@@ -66,6 +69,7 @@ const checkWin = function (player) {
 
       victoryFlag = true;
       updateScoreboard();
+      toggleModal(player);
     }
   }
   for (let i = 0; i < 3; i++) {
@@ -74,7 +78,10 @@ const checkWin = function (player) {
   }
   check(0, 1, 2);
   check(2, 1, 0);
-  if (!victoryFlag && counter === 9) scores.tie++;
+  if (!victoryFlag && counter === 9) {
+    scores.tie++;
+    toggleModal();
+  }
   updateScoreboard();
 };
 
@@ -83,6 +90,26 @@ const updateScoreboard = function () {
     document.querySelector(`.score-value-${element}`).innerHTML =
       scores[element];
   }
+};
+
+const toggleModal = function (winner = "tie") {
+  const text = document.querySelector(".text-winner");
+  if (winner !== "tie")
+    text.innerHTML = `<img src="img/icon-${winner}.svg" alt="" /> takes the round`;
+
+  if (winner === "x") {
+    text.style.color = "#31c3bd";
+    text.previousElementSibling.innerHTML = "You won!";
+  } else if (winner === "o") {
+    text.style.color = "#f2b137";
+    text.previousElementSibling.innerHTML = "You lost...";
+  } else {
+    text.style.color = "#31c3bd";
+    text.previousElementSibling.innerHTML = `Awh...`;
+  }
+
+  document.querySelector(".modal").classList.toggle("hidden");
+  document.querySelector(".overlay").classList.toggle("hidden");
 };
 
 const init = function () {
@@ -95,6 +122,8 @@ const init = function () {
   counter = 0;
   turn = true;
   victoryFlag = false;
+  turnImg.src = turnXSrc;
+
   document
     .querySelectorAll(".square")
     .forEach((square) => (square.innerHTML = ""));
@@ -108,6 +137,23 @@ gameContainer.addEventListener("click", function (e) {
 restartBtn.addEventListener("click", function () {
   init();
 });
+
+quitBtn.addEventListener("click", function (e) {
+  toggleModal();
+});
+
+nextBtn.addEventListener("click", function (e) {
+  init();
+  toggleModal();
+});
+
+window.addEventListener("beforeunload", function () {
+  localStorage.setItem("scores", JSON.stringify(scores));
+});
+
+if (localStorage.scores) {
+  scores = JSON.parse(localStorage.getItem("scores"));
+}
 
 init();
 updateScoreboard();
